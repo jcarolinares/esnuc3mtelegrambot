@@ -7,8 +7,16 @@ import urllib
 #d = pq("<html></html>")
 #d = pq(etree.fromstring("<html></html>"))
 d = pq(url='http://www.esnuc3m.org/events')
+#d.make_links_absolute(base_url="http://www.esnuc3m.org")
 #d = pq(url='http://google.com/', opener=lambda url, **kw: urllib.urlopen(url).read())
 #d = pq(filename='table.html')
+
+#print d
+
+#href_d=str(d)
+
+#href_d=href_d.find("/events")
+#print href_d
 
 #<span class="tabla_titulo_fecha">2016-01-24 09:00:00.0</span>
 
@@ -23,16 +31,27 @@ for x in date_data:
 	print (x)
 
 #Selection of links events
-event_link=d('div[class="field-item even"]')
+event_link=d('h2') #We take the headers where are the links
 #event_link=event_link.append("**")
 #event_link=event_link
-event_link=event_link.find("href")
-print event_link
-#event_link=event_link.split("**")
+#event_link=event_link.find("href")
+#print (event_link('a').find('href'))
+#print event_link
+event_link=str(event_link)
+event_link=event_link.split("**")
+
+del event_link[-1]#We erase the last header
+
+#Lo siguiente es sacar el href del primer link, reconstruirlo a absoluto y continuar con el resto
+#event_link[0]=event_link[0]
+
+for x in event_link:
+	print "\n\n"
+	print x
 
 #for x in event_link:
 #	print (x)
-
+#<a href="/events/
 
 '''
 <div class="node node-event node-promoted view-mode-list clearfix">
