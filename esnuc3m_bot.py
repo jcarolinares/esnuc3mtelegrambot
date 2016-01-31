@@ -25,14 +25,30 @@ d = pq(url='http://www.esnuc3m.org/events')
 #<span class="tabla_titulo_fecha">2016-01-24 09:00:00.0</span>
 
 
+#NEXT STEP DIVIDIR EVENTOS EN OTRAS LISTAS, FECHAS EN FECHAS, TITULOS EN TITULOS, COMENTARIOS EN COMENTARIOS
+#AGRUPAR DICHAS LISTAS EN UNA LISTA DE LISTAS
 #Selection of events
-date_data=d('div[class="field-item even"]')
-date_data=date_data.append("**")
-date_data=date_data.text()
-date_data=date_data.split("**")
+event_data=d('div[class="field-item even"]')
+event_data=event_data.append("**")
+event_data=event_data.text()
+event_data=event_data.replace(" ","")#Replaces no data with a ""
+event_data=event_data.split("**")
 
-for x in date_data:
-	print (x)
+
+print len(event_data)
+
+#Cleaning the data using a comprehension list
+event_data_cleaned=[event_data_cleaned for event_data_cleaned in event_data if event_data_cleaned != '']
+#[peli for peli in cine if peli != 'Emmanuelle']
+event_data=event_data_cleaned
+
+
+
+#for x in event_data:
+#	print (x)
+
+print event_data[1]
+
 
 #Selection of links events
 event_link=d('h2') #We take the headers where are the links
@@ -44,6 +60,11 @@ del event_link[-1]#We erase the last header
 #Lo siguiente es sacar el href del primer link, reconstruirlo a absoluto y continuar con el resto
 #event_link[0]=event_link[0]
 
+print len(event_data)
+print len(event_link)
+
+print event_data
+
 for x in range(len(event_link)):
 
 	relative_link=re.search('href="(.+?)\">',event_link[x])
@@ -53,12 +74,12 @@ for x in range(len(event_link)):
 		event_link[x]="http://www.esnuc3m.org"+str(event_link[x])
 		print event_link[x]
 
-for x in event_link:
-	print x
+#for x in event_link:
+#	print x
 
 #Info output
-for x in range(len(date_data)):
-	print(date_data[x])
+#for x in range(len(event_data)):
+#	print(event_data[x])
 	#print(event_link[x-1])
 
 '''
