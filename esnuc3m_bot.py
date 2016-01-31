@@ -1,6 +1,10 @@
 from pyquery import PyQuery as pq
 from lxml import etree
 import urllib
+import re
+
+
+
 
 
 #Acceso al html
@@ -32,11 +36,6 @@ for x in date_data:
 
 #Selection of links events
 event_link=d('h2') #We take the headers where are the links
-#event_link=event_link.append("**")
-#event_link=event_link
-#event_link=event_link.find("href")
-#print (event_link('a').find('href'))
-#print event_link
 event_link=str(event_link)
 event_link=event_link.split("**")
 
@@ -45,13 +44,22 @@ del event_link[-1]#We erase the last header
 #Lo siguiente es sacar el href del primer link, reconstruirlo a absoluto y continuar con el resto
 #event_link[0]=event_link[0]
 
+for x in range(len(event_link)):
+
+	relative_link=re.search('href="(.+?)\">',event_link[x])
+
+	if relative_link:
+		event_link[x]= relative_link.group(1)
+		event_link[x]="http://www.esnuc3m.org"+str(event_link[x])
+		print event_link[x]
+
 for x in event_link:
-	print "\n\n"
 	print x
 
-#for x in event_link:
-#	print (x)
-#<a href="/events/
+#Info output
+for x in range(len(date_data)):
+	print(date_data[x])
+	#print(event_link[x-1])
 
 '''
 <div class="node node-event node-promoted view-mode-list clearfix">
